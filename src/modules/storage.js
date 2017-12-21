@@ -27,6 +27,8 @@ export default class storage{
 		)
 	}
 
+	
+
 	getContactLocal(id){
 		let contacts= localStorage.getItem("contacts")
 		if (contacts){

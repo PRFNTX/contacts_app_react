@@ -7,6 +7,7 @@ const contactSchema = new mongoose.Schema({
 	Email:String,	
 	Twitter:String,	
 	Image:String,	
+	Display:String,
 })
 
 module.exports = mongoose.model("contact",contactSchema)

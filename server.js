@@ -2,7 +2,7 @@ const express = require("express")
 const app=express()
 
 const mongoose=require("mongoose")
-mongoose.connect("mongoDB://localhost/Contacts")
+mongoose.connect("mongodb://localhost/Contacts")
 
 const Contact=require("./models/contact")
 

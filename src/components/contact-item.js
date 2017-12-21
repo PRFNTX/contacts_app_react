@@ -6,12 +6,12 @@ class ContactItem extends Component{
 	render(){
 		return(
 			<div>
-				<img href="" />
+				<img href={this.props.contact.Image} />
 				<div>
-					<h3>Name</h3>
-					<span> Info </span>
+					<h2>{this.props.contact.Name}</h2>
+					<p>{this.props.contact[this.props.contact.Display]}</p>
 				</div>
-				<button>Edit</button>
+				<button onClick={()=>this.props.edit(this.props.contact._id)}>Edit</button>
 			</div>
 		);
 	}
