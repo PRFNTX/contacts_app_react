@@ -4,16 +4,20 @@ import './App.css';
 
 import ContactList from "./components/contact-list"
 import ContactItem from "./components/contact-item"
-import ContactNew from "./components/contact-new"
+
+import ContactForm from "./pages/contact-form" 
+import Main from "./pages/contact-form" 
 
 class App extends Component {
   render() {
     return (
-		<div>
-			<h1>Super Contact App</h1>
-			<ContactList/>
-			<ContactNew/>
-		</div>
+		<Router>
+			<Switch>
+				<Route path="/" exact component={Main}>
+				<Route path="/new" component={ContactForm}>
+				<Route path="/edit/:contact" component={ContactForm}>
+			</Switch>
+		</Router>
     );
   }
 }

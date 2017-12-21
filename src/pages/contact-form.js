@@ -2,64 +2,48 @@ import React, { Component } from "react"
 
 
 class ContactForm extends Component{
-	constructor(){
-		super()
-		this.state={
-			fields:[
-				{title:"Name",value:""},
-				{title:"Phone",value:""},
-				{title:"E-mail",value:""},
-				{title:"Image",value:""},
-			],
-		}
+
+	constructor(props){
+		super(props)
+		this.fields=[
+				'Name',
+				'Detail',
+				'Phone',
+				'E-mail',
+				'Twitter',
+				'Image',
+			]
+		this.display=props.display||"Detail"
 	}
 
-	/*
-	{
-	field={
-		title:"",
-		value""
+	handleSubmit(e){
+		e.preventDefault()
+		this.props.submit(e)
 	}
-	*/
-
-	/*
-	addField(div){
-		console.log(div)	
-		let title=div.children.title.value
-		let value=div.children.value.value
-		let newState=[...this.state.fields,{title,value}]
-		this.setState({
-			fields:newState
-		})
-	}
-	*/
 
 	render(){
-		let fields=this.state.fields.map(val=>{
+		let fields=this.fields.map(val=>{
 			<div>
-				<label for={val.title} >{val.title+": "}</label>
-				<input type="text" id={val.title} placeholder={"enter "+val.title} name={val.title} value={val.value} />
+				<label for={val} >{val+": "}</label>
+				<input type="text" id={val} placeholder={"enter "+val} name={val} value={this.props.values[va]||""} />
 			</div>
 		})
 
-		let infoFieldOptions = this.state.fields.map(val=>{
-			return <option value={val.title} >{val.title}</option>
+		let infoFieldOptions = this.fields.slice(1).map(val=>{
+			return <option value={val.title} selected={String(val===this.display)}>{val.title}</option>
 		}) 
 		return(
 			<div>
-				<form>
+				<form onSubmit={(e)=>handleSubmit(e)}>
 					{fields}
-					<div ref={(ref)=>this.newField=ref}>
-						<input type="text" name="title" placeholder="new field name..." />
-						<input type="text" name="value" placeholder="new field value..." />
-						<button type="button" onClick={()=>this.addField(this.newField)} >Add</button>
-					</div>
 					<select name="info">
 						{infoFieldOptions}
 					</select>
 					<input type="submit" />
-				<form>
+				</form>
 			</div>
 		);
 	}
 }
+
+export default ContactForm
