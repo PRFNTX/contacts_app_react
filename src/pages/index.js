@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import storage from "../modules/storage"
 
 class Main extends Component{
 	constructor(){
@@ -8,35 +9,32 @@ class Main extends Component{
 		}
 	}
 
-	fetchContacts=()=>{
-		axios.get("/contacts").then(
+	
+	componentWillMount(){
+		storage.checkContactsAndGet().then(
 			result=>{
-				localStorage.setItem("contacts",result.data)
+				console.log(result)
 				this.setState({
-					contacts:result.data,
+					contacts:result
 				})
 			}
 		)
 	}
-	
-	componentWillMount(){
-		let contacts=localStorage.getItem("contacts")
-		if (contacts===null){
-			//TODO addAuth
-			this.fetchContacts()
-		} else {
-			this.setState({
-				contacts:contacts,
-			})
-		}
+
+	handleAdd(){
+		//TODO reroute to new
+	}
+
+	handleEdit(){
+		//TODO reroute to edit
 	}
 
 	render(){
 		return(
 			<div>
 				<h1>Super Contact App</h1>
-				<ContactList/>
-				<ContactNew/>
+				<ContactList contacts={this.state.contacts}/>
+				<button onClick={this.handleAdd} >Add Contact</button>
 			</div>
 		);
 	}

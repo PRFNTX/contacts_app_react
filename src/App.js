@@ -16,6 +16,7 @@ class App extends Component {
 				<Route path="/" exact component={Main}>
 				<Route path="/new" component={ContactForm}>
 				<Route path="/edit/:contact" component={ContactForm}>
+				<Route path="/view/:contact" component={ContactView}>
 			</Switch>
 		</Router>
     );
