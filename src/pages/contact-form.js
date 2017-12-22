@@ -49,10 +49,14 @@ class ContactForm extends Component{
 
 	handleSubmit(e){
 		e.preventDefault()
+		console.log(e)
 		let contact={}
 		this.fields.forEach((val)=>{
+			console.log(val)
 			contact[val]=e.target.elements[val].value
 		})
+		contact["Display"]=e.target.elements["Display"].value
+	
 		if (this.edit){
 			storage.editContact(contact,this.id.value).then(
 				result=>{

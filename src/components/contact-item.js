@@ -9,12 +9,12 @@ class ContactItem extends Component{
 		console.log("item",this.props.contact.Image)
 		return(
 			<div>
-				<img href={this.props.contact.Image} />
-				<div>
-					<h2>{this.props.contact.Name}</h2>
-					<p>{this.props.contact[this.props.contact.Display]}</p>
+				<img style={{display:'inline-block'}} href={this.props.contact.Image} />
+				<div style={{display:'inline-block'}}>
+					<h2 style={{'margin-bottom':0}} >{this.props.contact.Name}</h2>
+					<p style={{'margin-top':0,'margin-left':"5%"}} >{this.props.contact.Display+": "+this.props.contact[this.props.contact.Display]}</p>
 				</div>
-				<WrappedLink to={"/edit/"+(this.props.contact._id)} text="Edit" />
+				<WrappedLink style={{display:'inline-block'}} to={"/edit/"+(this.props.contact._id)} text="Edit" />
 			</div>
 		);
 	}
