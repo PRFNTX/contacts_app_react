@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 const WrappedLink = (props) => {
   return (
 
-	<Link to={props.to} >
+	<Link className={props.className} to={props.to} >
 		<button>
 			{props.text}
 		</button>

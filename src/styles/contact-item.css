@@ -1,0 +1,46 @@
+.inlineBlock {
+	display:inline-block;
+}
+
+.botMar0{
+	margin-bottom:0;
+}
+
+.topMar0{
+	margin-top:0;
+}
+
+.shiftRight{
+	margin-left:5%;
+}
+
+.item{
+	margin-top:1vh;
+	height:6vh;
+	width:50%;
+	position:relative;
+	left:50%;
+	transform:TranslateX(-50%);
+}
+
+.item h2{
+	font-size:100%;
+}
+
+.item p{
+	font-size:2.5%;
+	width:100%;
+	color:grey;
+}
+
+.rel{
+	position:relative;
+}
+
+.item img{
+	height:100%;
+}
+
+.right{
+	float:right;
+}
