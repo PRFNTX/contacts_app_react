@@ -10,6 +10,8 @@ class ContactView extends Component{
 		}
 	}
 	componentWillMount(){
+		//...am i just emulating redux?...
+		//i should finish learning redux...
 		storage.getContact(this.props.match.contact).then(
 			result=>{
 				this.setState({

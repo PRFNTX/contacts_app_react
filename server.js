@@ -11,6 +11,7 @@ app.use(express.urlencoded({extended:true}))
 
 const PORT=8080
 
+
 app.get("/contacts/:id",(req,res)=>{
 	Contact.findOne({_id:req.params.id}).then(
 		result=>{
@@ -24,7 +25,6 @@ app.get("/contacts/:id",(req,res)=>{
 app.get("/contacts",(req,res)=>{
 	Contact.find({}).then(
 		contacts=>{
-			console.log(contacts)
 			res.json({contacts})
 		}
 	).catch(err=>{
@@ -32,6 +32,7 @@ app.get("/contacts",(req,res)=>{
 	})
 })
 
+//adds a contact
 app.post("/contacts",(req,res)=>{
 	let contact=req.body.contact
 	Contact.create(contact).then(
@@ -43,26 +44,21 @@ app.post("/contacts",(req,res)=>{
 	})
 })
 
-app.put("/contacts",(req,res)=>{
-	console.log(req.body)
+//edit contact
+app.put("/contacts/:id",(req,res)=>{
 	let contact=req.body.contact
-	let id=req.body.id
-	Contact.findOne({_id:id}).then(
-		result=>{
-			Object.keys(contact).forEach((val)=>{
-				result[val]=contact[val]
-			})
-			return result.save()
-		}
-	).then(
+	let id=req.params.id
+	Contact.findByIdAndUpdate(id, {$set:contact},{new:true}).then(
 		saved=>{
-			res.json(saved)	
+			res.json({saved})
+			
 		}
 	).catch(err=>{
-		res.status(400).json({message:"some or all failed"})
+		res.status(400).json({message:"put failed"})
 	})
 })
 
+//delete contact TODO
 app.delete("/contacts/:id", (req,res)=>{
 	Contact.findOne({_id:req.params.id}).remove().then(
 		result=>{

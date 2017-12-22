@@ -1,27 +1,28 @@
 import axios from "axios"
 
 class storage{
+	//check state synchronus,
 	checkContactsLocal(){
 		let contacts=JSON.parse(localStorage.getItem("contacts"))
 		return contacts
 	}
 
+	//ensures database matches local... i think TODO
 	saveContacts(contacts){
-		console.log(contacts)
 		localStorage.setItem("contacts",JSON.stringify(contacts))
 		return axios.post("/contacts",contacts).then(
 			result=>{
-				console.log(result)
 				return result.data
 			}	
 		)
 	}
 
+	//saves an edited contact to database and matches local 
 	editContact(contact,id){
-		return axios.put("/contacts",{contact,id}).then(
+		return axios.put("/contacts/"+id,{contact}).then(
 			result=>{
 				let currentLocal = JSON.parse(localStorage.getItem("contacts"))
-				if (currentLocal===null){
+				if (currentLocal!==null){
 					currentLocal = currentLocal.map(contact=>{
 						if (contact._id===result.data.saved._id){
 							return result.data.saved
@@ -32,33 +33,32 @@ class storage{
 				} else {
 					currentLocal=[result.data.saved]	
 				}
-				console.log(currentLocal)
 				localStorage.setItem("contacts",JSON.stringify(currentLocal))
 				return true
 			}
 		)
 	}
 
+	//saves new contact and matches local
 	addContact(contact){
 		return axios.post("/contacts",{contact}).then(
 			result=>{
 				let currentLocal = JSON.parse(localStorage.getItem("contacts"))
 				currentLocal = currentLocal===null ? [result.data.saved] : currentLocal.concat(result.data.saved)
-				console.log(currentLocal)
 				localStorage.setItem("contacts",JSON.stringify(currentLocal))
 				return true
 			}
 		)
 	}
 
+	//async get contacts, will get rom server if local storage is empty
+	//TODO ensure local storage matches server?
 	async checkContactsAndGet(){
 		let contacts=JSON.parse(localStorage.getItem("contacts"))
-		console.log(contacts)
 		if (contacts===null){
-			contacts=await axios.get("/contacts").then(
+			contacts=axios.get("/contacts").then(
 				results=>{
 					this.saveContacts(results.data.contacts)
-					console.log(results.data.contacts)
 					return results.data.contacts
 				}
 			)
@@ -66,6 +66,7 @@ class storage{
 		return contacts	
 	}
 
+	//checks local stoarage for contact
 	getContactLocal(id){
 		let contacts= JSON.parse(localStorage.getItem("contacts"))
 		if (contacts){
@@ -74,14 +75,16 @@ class storage{
 		return null
 	}
 
+
+	//gets contact from local storage or server
 	async getContact(id){
 		let contacts= JSON.parse(localStorage.getItem("contacts"))
-		if (contacts){
-			return contacts.filter(val=>val._id===id)
+		if (contacts!==null && (contacts.filter(val=>val._id===id).length>0)){
+			return contacts.reduce((a,val)=>{return val._id===id ? val : a})
 		}	else {
 			return axios.get("/contacts/"+id).then(
 				result=>{
-					return result.data
+					return result.data.result
 				}
 			)
 		}

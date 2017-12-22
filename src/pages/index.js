@@ -14,6 +14,8 @@ class Main extends Component{
 
 	
 	componentWillMount(){
+		//fill list from localStorage or from server
+		//should probably lift this state
 		storage.checkContactsAndGet().then(
 			result=>{
 				console.log(result)
@@ -27,7 +29,7 @@ class Main extends Component{
 
 
 	render(){
-		console.log(this.state.contacts)
+		
 		return(
 			<div>
 				<h1>Super Contact App</h1>
