@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ContactItem from "./contact-item"
 
 class ContactList extends Component{
 	
@@ -14,7 +15,9 @@ class ContactList extends Component{
 			)
 		})
 		return(
-			<div/>
+			<div>
+				{contacts}
+			</div>
 		);
 	}
 }

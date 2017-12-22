@@ -24,7 +24,7 @@ app.get("/contacts/:id",(req,res)=>{
 app.get("/contacts",(req,res)=>{
 	Contacts.find({}).then(
 		found=>{
-			res.json(result:found)
+			res.json({result:found})
 		}
 	).catch(err=>{
 		res.status(400).json({test:"failed"})

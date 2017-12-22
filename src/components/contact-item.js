@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import {BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
+import WrappedLink from "../components/wrapped-link"
+
 
 class ContactItem extends Component{
 	render(){
@@ -11,7 +13,7 @@ class ContactItem extends Component{
 					<h2>{this.props.contact.Name}</h2>
 					<p>{this.props.contact[this.props.contact.Display]}</p>
 				</div>
-				<button onClick={()=>this.props.edit(this.props.contact._id)}>Edit</button>
+				<WrappedLink to={"/edit/"+(this.props.contact._id)} text="Edit" />
 			</div>
 		);
 	}

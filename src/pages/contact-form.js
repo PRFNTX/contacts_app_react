@@ -11,21 +11,30 @@ class ContactForm extends Component{
 				'Name',
 				'Detail',
 				'Phone',
-				'E-mail',
+				'Email',
 				'Twitter',
 				'Image',
 			]
-		this.values={
+		this.state={
+			values:{
 				Name:"",
 				Detail:"",
 				Phone:"",
-				E-mail:"",
+				Email:"",
 				Twitter:"",
 				Image:"",
 				Display:"Detail"
 			}
-		this.edit=false;
+		}
 		
+	}
+
+	shouldComponentUpdate(nextProps,nextState){
+		//try to catch only instances where data is received for editing
+		if (!(this.state.values.Name) && nextState.values.Name){
+			return true
+		}
+		return false
 	}
 
 	componentWillMount(){
@@ -46,21 +55,23 @@ class ContactForm extends Component{
 	}
 
 	render(){
+		console.log(this.fields)
 		let fields=this.fields.map(val=>{
-			<div>
+			return <div>
 				<label for={val} >{val+": "}</label>
-				<input type="text" id={val} placeholder={"enter "+val} name={val} value={this.values[val]} />
+				<input type="text" id={val} placeholder={"enter "+val} name={val} value={this.state.values[val]} />
 			</div>
 		})
 
 		let infoFieldOptions = this.fields.slice(1).map(val=>{
-			return <option value={val.title} selected={String(val===this.values[this.values.display])}>{val.title}</option>
+			return <option value={val} >{val}</option>
 		}) 
 		return(
 			<div>
-				<form onSubmit={(e)=>handleSubmit(e)}>
+				<form onSubmit={(e)=>this.handleSubmit(e)}>
 					{fields}
-					<select name="info">
+					<label for="Display">Display Property</label>
+					<select id="Display" defaultValue={this.state.values.Display} name="info">
 						{infoFieldOptions}
 					</select>
 					<input type="submit" />

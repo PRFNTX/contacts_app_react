@@ -1,20 +1,9 @@
-export default class storage{
+import axios from "axios"
+
+class storage{
 	checkContactsLocal(){
 		let contacts=localStorage.getItem("contacts")
 		return contacts
-	}
-
-	async checkContactsAndGet(){
-		let contacts=localStorage.getItem("contacts")
-		if (contacts===null){
-			contacts=await axios.get("/contacts").then(
-				results=>{
-					saveContacts(results.data)
-					return results.data
-				}
-			)
-		} 
-		return contacts	
 	}
 
 	saveContacts(contacts){
@@ -27,7 +16,27 @@ export default class storage{
 		)
 	}
 
-	
+	addContact(contact){
+		axios.post("/contacts",contact).then(
+			result=>{
+				localStorage.setItem("contacts",result.data)
+			}
+		).catch(err=>console.log(err))
+		
+	}
+
+	async checkContactsAndGet(){
+		let contacts=localStorage.getItem("contacts")
+		if (contacts===null){
+			contacts=await axios.get("/contacts").then(
+				results=>{
+					this.saveContacts(results.data)
+					return results.data
+				}
+			)
+		} 
+		return contacts	
+	}
 
 	getContactLocal(id){
 		let contacts= localStorage.getItem("contacts")
@@ -52,3 +61,5 @@ export default class storage{
 	}
 
 }
+
+export default new storage
