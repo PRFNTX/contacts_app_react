@@ -3,17 +3,15 @@ import ContactItem from "./contact-item"
 
 class ContactList extends Component{
 	
-	editContact(id){
-		//TODO redirect to /edit/"+id
-		console.log("gonna edit")
-	}
-
 	render(){
-		let contacts=this.props.contacts.map(val=>{
-			return(
-				<ContactItem contact={val} edit={this.editContact} />
-			)
-		})
+		let contacts=[]
+		if (this.props.contacts.length>0){
+			contacts=this.props.contacts.map(val=>{
+				return(
+					<ContactItem contact={val} />
+				)
+			})
+		}
 		return(
 			<div>
 				{contacts}

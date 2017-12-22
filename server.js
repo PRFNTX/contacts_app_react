@@ -12,7 +12,7 @@ app.use(express.urlencoded({extended:true}))
 const PORT=8080
 
 app.get("/contacts/:id",(req,res)=>{
-	Contacts.findOne({_id:req.params.id}).then(
+	Contact.findOne({_id:req.params.id}).then(
 		result=>{
 			res.json({result})
 		}
@@ -22,9 +22,10 @@ app.get("/contacts/:id",(req,res)=>{
 })
 
 app.get("/contacts",(req,res)=>{
-	Contacts.find({}).then(
-		found=>{
-			res.json({result:found})
+	Contact.find({}).then(
+		contacts=>{
+			console.log(contacts)
+			res.json({contacts})
 		}
 	).catch(err=>{
 		res.status(400).json({test:"failed"})
@@ -32,24 +33,38 @@ app.get("/contacts",(req,res)=>{
 })
 
 app.post("/contacts",(req,res)=>{
-	//contacts list should be an array
-	let contacts=res.body.contacts
-	contacts.map(val=>{
-		return Contact.findOne({_id:val._id}).then(
-			found=>{
-				found=new Contact({val})
-				return found.save()
-			}
-		)
-	}).all(
-		res.json({message:"success"})
+	let contact=req.body.contact
+	Contact.create(contact).then(
+		saved=>{
+			res.json({saved})
+		}
+	).catch(err=>{
+		res.status(400).json({message:"some or all failed"})
+	})
+})
+
+app.put("/contacts",(req,res)=>{
+	console.log(req.body)
+	let contact=req.body.contact
+	let id=req.body.id
+	Contact.findOne({_id:id}).then(
+		result=>{
+			Object.keys(contact).forEach((val)=>{
+				result[val]=contact[val]
+			})
+			return result.save()
+		}
+	).then(
+		saved=>{
+			res.json(saved)	
+		}
 	).catch(err=>{
 		res.status(400).json({message:"some or all failed"})
 	})
 })
 
 app.delete("/contacts/:id", (req,res)=>{
-	Contacts.findOne({_id:req.params.id}).remove().then(
+	Contact.findOne({_id:req.params.id}).remove().then(
 		result=>{
 			res.json({message:"item deleted"})
 		}

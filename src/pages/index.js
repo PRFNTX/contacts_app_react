@@ -27,6 +27,7 @@ class Main extends Component{
 
 
 	render(){
+		console.log(this.state.contacts)
 		return(
 			<div>
 				<h1>Super Contact App</h1>

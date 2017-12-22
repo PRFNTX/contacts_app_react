@@ -15,8 +15,8 @@ class ContactForm extends Component{
 				'Twitter',
 				'Image',
 			]
-		this.state={
-			values:{
+		/*
+		this.values:{
 				Name:"",
 				Detail:"",
 				Phone:"",
@@ -26,15 +26,10 @@ class ContactForm extends Component{
 				Display:"Detail"
 			}
 		}
+		*/
+		this.edit=false
+		this.id={value:null}
 		
-	}
-
-	shouldComponentUpdate(nextProps,nextState){
-		//try to catch only instances where data is received for editing
-		if (!(this.state.values.Name) && nextState.values.Name){
-			return true
-		}
-		return false
 	}
 
 	componentWillMount(){
@@ -42,7 +37,11 @@ class ContactForm extends Component{
 			storage.getContact(this.props.match.contact).then(
 				result=>{
 					console.log("contact in unhandled",result)
-					//this.edit=true
+					Object.keys(result).forEach((val)=>{
+						this[val].value=result[val]	
+					})
+					this.edit=true
+					
 				}
 			)
 		}
@@ -50,8 +49,23 @@ class ContactForm extends Component{
 
 	handleSubmit(e){
 		e.preventDefault()
-		//this.props.submit(e)
-		
+		let contact={}
+		this.fields.forEach((val)=>{
+			contact[val]=e.target.elements[val].value
+		})
+		if (this.edit){
+			storage.editContact(contact,this.id.value).then(
+				result=>{
+					window.location.pathname="/"
+				}
+			).catch(err=>{console.log(err)})
+		} else {
+			storage.addContact(contact).then(
+				result=>{
+					window.location.pathname="/"
+				}
+			).catch(err=>{console.log(err)})
+		}
 	}
 
 	render(){
@@ -59,7 +73,7 @@ class ContactForm extends Component{
 		let fields=this.fields.map(val=>{
 			return <div>
 				<label for={val} >{val+": "}</label>
-				<input type="text" id={val} placeholder={"enter "+val} name={val} value={this.state.values[val]} />
+				<input ref={(ref)=>this[val]=ref} type="text" id={val} placeholder={"enter "+val} name={val} />
 			</div>
 		})
 
@@ -71,7 +85,7 @@ class ContactForm extends Component{
 				<form onSubmit={(e)=>this.handleSubmit(e)}>
 					{fields}
 					<label for="Display">Display Property</label>
-					<select id="Display" defaultValue={this.state.values.Display} name="info">
+					<select id="Display" defaultValue="Detail" name="info">
 						{infoFieldOptions}
 					</select>
 					<input type="submit" />

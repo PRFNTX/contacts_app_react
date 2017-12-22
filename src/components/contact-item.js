@@ -6,6 +6,7 @@ import WrappedLink from "../components/wrapped-link"
 
 class ContactItem extends Component{
 	render(){
+		console.log("item",this.props.contact.Image)
 		return(
 			<div>
 				<img href={this.props.contact.Image} />
