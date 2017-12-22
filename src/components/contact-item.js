@@ -16,7 +16,7 @@ class ContactItem extends Component{
 	render(){
 		return(
 			<div className="item">
-				<img src={this.props.contact.Image} />
+				<img src={this.props.contact.Image} alt={this.props.contact.Image}/>
 				<div className="inlineBlock">
 					<h2 className="botMar0" >{this.props.contact.Name}</h2>
 					<p className="topMar0 shiftRight" >{this.props.contact.Display+": "+this.props.contact[this.props.contact.Display]}</p>
