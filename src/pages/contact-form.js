@@ -67,10 +67,14 @@ class ContactForm extends Component{
 		//convert fields to input items
 		//potential to add custom fields
 		let fields=this.fields.map(val=>{
-			return <div>
-				<label htmlFor={val} >{val+": "}</label>
-				<input ref={(ref)=>this[val]=ref} type="text" id={val} placeholder={"enter "+val} name={val} />
-			</div>
+			return <tr>
+				<td>
+					<label htmlFor={val} >{val+": "}</label>
+				</td>
+				<td>
+					<input ref={(ref)=>this[val]=ref} type="text" id={val} placeholder={"enter "+val} name={val} />
+				</td>
+			</tr>
 		})
 
 		//choose field to display on contact list
@@ -80,7 +84,12 @@ class ContactForm extends Component{
 		return(
 			<div>
 				<form onSubmit={(e)=>this.handleSubmit(e)}>
-					{fields}
+					<h1 className="center-text">Contact</h1>
+					<table className="center-fixed">
+						<tbody>
+							{fields}
+						</tbody>
+					</table>
 					<label htmlFor="Display">Display Property</label>
 					<select ref={(ref)=>this.Display=ref} id="Display" defaultValue="Detail" name="Display">
 						{infoFieldOptions}
