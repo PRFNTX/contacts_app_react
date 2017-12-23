@@ -5,7 +5,7 @@ const WrappedLink = (props) => {
   return (
 
 	<Link className={props.className} to={props.to} >
-		<button>
+		<button style={{height:'100%',width:'100%'}}>
 			{props.text}
 		</button>
 	</Link>

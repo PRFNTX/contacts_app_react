@@ -8,7 +8,7 @@ class ContactList extends Component{
 		if (this.props.contacts.length>0){
 			contacts=this.props.contacts.map(val=>{
 				return(
-					<ContactItem contact={val} />
+					<ContactItem delete={this.props.delete}contact={val} />
 				)
 			})
 		}

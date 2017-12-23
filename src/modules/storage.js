@@ -10,11 +10,6 @@ class storage{
 	//ensures database matches local... i think TODO
 	saveContacts(contacts){
 		localStorage.setItem("contacts",JSON.stringify(contacts))
-		return axios.post("/contacts",contacts).then(
-			result=>{
-				return result.data
-			}	
-		)
 	}
 
 	//saves an edited contact to database and matches local 
@@ -88,7 +83,16 @@ class storage{
 				}
 			)
 		}
-		
+	}
+
+	deleteContact(id){
+		return axios.delete("/contacts/"+id).then(
+			result=>{
+				let contacts=JSON.parse(localStorage.getItem("contacts")).filter(val=>val._id!==id)
+				localStorage.setItem("contacts",JSON.stringify(contacts))
+				return result
+			}
+		)
 	}
 
 }
