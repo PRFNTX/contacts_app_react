@@ -8,6 +8,7 @@ const contactSchema = new mongoose.Schema({
 	Twitter:String,	
 	Image:String,	
 	Display:String,
+	FIle:String,
 })
 
 module.exports = mongoose.model("contact",contactSchema)

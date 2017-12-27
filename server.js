@@ -1,6 +1,8 @@
 const express = require("express")
 const app=express()
 
+const fileSystem = require('fs')
+
 const mongoose=require("mongoose")
 mongoose.connect("mongodb://localhost/Contacts")
 
@@ -11,6 +13,7 @@ app.use(express.urlencoded({extended:true}))
 
 const PORT=8080
 
+const filePath="./files/"
 
 app.get("/contacts/:id",(req,res)=>{
 	Contact.findOne({_id:req.params.id}).then(
@@ -67,6 +70,20 @@ app.delete("/contacts/:id", (req,res)=>{
 	).catch(err=>{
 		res.status(400).json({message:"failed to delete"})
 	})
+})
+
+
+app.post("/file",(req,res)=>{
+	console.log("got post file")
+	let file=req.body.data	
+	console.log(file)
+	let filename=filePath+file.lastModified+file.name
+	let stream=fileSystem.writeFile(filename,file.slice(0),(err)=>{
+		if (err){
+			res.status(501).json({message:"failed to write file"})
+		}
+		res.send(filename)
+	})		
 })
 
 app.listen(PORT,()=>{

@@ -13,7 +13,15 @@ class storage{
 	}
 
 	//saves an edited contact to database and matches local 
-	editContact(contact,id){
+	async editContact(contact,id){
+		if (contact.File){
+			let { File } = contact
+			await axios.post("/file",{data:File}).then(
+				path=>{
+					contact.File=path
+				}
+			).catch(err=>console.log(err))
+		}
 		return axios.put("/contacts/"+id,{contact}).then(
 			result=>{
 				let currentLocal = JSON.parse(localStorage.getItem("contacts"))
@@ -35,7 +43,16 @@ class storage{
 	}
 
 	//saves new contact and matches local
-	addContact(contact){
+	async addContact(contact){
+		console.log(!!(contact.File))
+		if (!!(contact.File)){
+			let File = contact.File
+			await axios.post("/file",File).then(
+				path=>{
+					contact.File=path
+				}
+			).catch(err=>console.log(err))
+		}
 		return axios.post("/contacts",{contact}).then(
 			result=>{
 				let currentLocal = JSON.parse(localStorage.getItem("contacts"))

@@ -17,10 +17,17 @@
 .item{
 	margin-top:1vh;
 	height:6vh;
-	width:50%;
+	width:50vw;
 	position:relative;
 	left:50%;
 	transform:TranslateX(-50%);
+	border:1px solid grey;
+}
+
+
+.expandedDetails{
+	display:inline-block;
+	margin:0 25%;
 	border:1px solid grey;
 }
 
@@ -48,4 +55,10 @@
 
 .fillY{
 	height:100%;
+}
+
+.clickable{
+	display:inline-block;
+	cursor:pointer;
+	width:40vw;
 }

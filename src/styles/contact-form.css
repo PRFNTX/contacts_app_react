@@ -11,3 +11,10 @@
 	text-align:center;
 }
 
+.submit{
+	position:fixed;
+	left:50%;
+	transform:translateX(-50%);
+	width:40vw;
+}
+
