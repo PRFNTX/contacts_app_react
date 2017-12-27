@@ -22,7 +22,7 @@ class ContactList extends Component{
 				return(
 					<div>
 						<ContactItem expand={this.expandItem} delete={this.props.delete} contact={val} />
-						<div className={this.state.expanded ? "half center fillY expandedDetails" : "half center fillY"} >
+						<div className={this.state.expanded===val._id ? "half center fillY expandedDetails" : "half center fillY"} >
 							{val._id===this.state.expanded && Object.keys(val).slice(1).filter(key=>!this.exclude.includes(key)).map(key=>{
 								return (
 									<div className="center-text">
